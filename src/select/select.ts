@@ -15,7 +15,7 @@ let styles = `
   .ui-select-placeholder {
     float: left;
   }
-  
+  te
   /* Fix Bootstrap dropdown position when inside a input-group */
   .input-group > .dropdown {
     /* Instead of relative */
@@ -264,6 +264,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input() public textField: string = 'text';
   @Input() public childrenField: string = 'children';
   @Input() public multiple: boolean = false;
+  @Input() public required: boolean = false;
 
   @Input()
   public set items(value: Array<any>) {
@@ -483,11 +484,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
       controlValue = [];
     }
 
-    return (controlValue.length > 0) ? null : {
+    return (this.required && controlValue.length == 0) ? {
       ng2SelectEmptyError: {
         valid: false
       }
-    };
+    } : null;
   }
 
   public registerOnChange(fn: (_: any) => {}): void { this.onChange = fn; }
